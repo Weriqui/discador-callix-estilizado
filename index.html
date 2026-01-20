@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Discador iPhone</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="phone-container">
+
+        <!-- Dialer Screen -->
+        <div class="screen dialer-screen active" id="dialerScreen">
+            <div class="dialer-header">
+                <div class="status-container">
+                    <button class="status-badge available" id="statusBadge">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Disponível</span>
+                    </button>
+                </div>
+                <div class="status-actions">
+                    <button class="pause-btn" id="pauseBtn">
+                        <i class="fas fa-pause"></i>
+                        <span>Pausa</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="phone-number-display">
+                <input type="tel" id="phoneNumber" class="phone-input" placeholder="" autocomplete="off" inputmode="tel">
+            </div>
+
+            <div class="keypad">
+                <div class="key" data-value="1">
+                    <span class="number">1</span>
+                    <span class="letters">&nbsp;</span>
+                </div>
+                <div class="key" data-value="2">
+                    <span class="number">2</span>
+                    <span class="letters">ABC</span>
+                </div>
+                <div class="key" data-value="3">
+                    <span class="number">3</span>
+                    <span class="letters">DEF</span>
+                </div>
+                <div class="key" data-value="4">
+                    <span class="number">4</span>
+                    <span class="letters">GHI</span>
+                </div>
+                <div class="key" data-value="5">
+                    <span class="number">5</span>
+                    <span class="letters">JKL</span>
+                </div>
+                <div class="key" data-value="6">
+                    <span class="number">6</span>
+                    <span class="letters">MNO</span>
+                </div>
+                <div class="key" data-value="7">
+                    <span class="number">7</span>
+                    <span class="letters">PQRS</span>
+                </div>
+                <div class="key" data-value="8">
+                    <span class="number">8</span>
+                    <span class="letters">TUV</span>
+                </div>
+                <div class="key" data-value="9">
+                    <span class="number">9</span>
+                    <span class="letters">WXYZ</span>
+                </div>
+                <div class="key" data-value="*">
+                    <span class="number">✱</span>
+                    <span class="letters">&nbsp;</span>
+                </div>
+                <div class="key" data-value="0">
+                    <span class="number">0</span>
+                    <span class="letters">+</span>
+                </div>
+                <div class="key" data-value="#">
+                    <span class="number">#</span>
+                    <span class="letters">&nbsp;</span>
+                </div>
+            </div>
+
+            <div class="call-actions">
+                <div class="empty-space"></div>
+                <button class="call-button" id="callButton">
+                    <i class="fas fa-phone"></i>
+                </button>
+                <button class="delete-button" id="deleteButton" style="visibility: hidden;">
+                    <i class="fas fa-delete-left"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Call Screen -->
+        <div class="screen call-screen" id="callScreen">
+            <div class="call-info">
+                <div class="call-status">
+                    <span class="operator-badge-small">PR</span>
+                    <span id="callStatus">Ligando... </span>
+                </div>
+                <div class="call-number" id="callNumber">(48) 99203-3200</div>
+                <div class="call-location">Brasil</div>
+                
+                <!-- Client Data Card (shown when API returns data) -->
+                <div class="client-card" id="clientCard" style="display: none;">
+                    <div class="client-card-header">
+                        <i class="fas fa-user-circle client-avatar"></i>
+                        <div class="client-main-info">
+                            <span class="client-name" id="clientName">--</span>
+                            <span class="client-company" id="clientCompany">--</span>
+                        </div>
+                    </div>
+                    <div class="client-card-divider"></div>
+                    <div class="client-values-grid">
+                        <div class="client-value-item">
+                            <span class="client-value-label">Dívida Ativa</span>
+                            <span class="client-value-amount debt" id="clientDebt">R$ 0,00</span>
+                        </div>
+                        <div class="client-value-item">
+                            <span class="client-value-label">Valor Recuperado</span>
+                            <span class="client-value-amount recovered" id="clientRecovered">R$ 0,00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="call-controls">
+                <div class="control-row">
+                    <button class="control-button" id="speakerBtn">
+                        <div class="control-icon">
+                            <i class="fas fa-volume-high"></i>
+                        </div>
+                        <span>Alto-falante</span>
+                    </button>
+                    <button class="control-button" id="muteBtn">
+                        <div class="control-icon">
+                            <i class="fas fa-microphone-slash"></i>
+                        </div>
+                        <span>Mudo</span>
+                    </button>
+                    <button class="control-button" id="keypadBtn">
+                        <div class="control-icon">
+                            <i class="fas fa-th"></i>
+                        </div>
+                        <span>Teclado</span>
+                    </button>
+                </div>
+                <div class="control-row control-row-center">
+                    <button class="control-button whatsapp-btn" id="whatsappBtn">
+                        <div class="control-icon whatsapp-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <span>WhatsApp</span>
+                    </button>
+                    <div class="end-call-wrapper">
+                        <button class="end-call-button" id="endCallButton">
+                            <i class="fas fa-phone-slash"></i>
+                        </button>
+                        <span class="end-call-label">Desligar</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- In-Call Keypad -->
+        <div class="screen incall-keypad-screen" id="incallKeypadScreen">
+            <div class="incall-header">
+                <button class="hide-keypad-btn" id="hideKeypadBtn">
+                    <span>Ocultar</span>
+                </button>
+            </div>
+            <div class="incall-number-display">
+                <span id="incallPhoneNumber"></span>
+            </div>
+            <div class="keypad incall-keypad">
+                <div class="key incall-key" data-value="1">
+                    <span class="number">1</span>
+                    <span class="letters">&nbsp;</span>
+                </div>
+                <div class="key incall-key" data-value="2">
+                    <span class="number">2</span>
+                    <span class="letters">ABC</span>
+                </div>
+                <div class="key incall-key" data-value="3">
+                    <span class="number">3</span>
+                    <span class="letters">DEF</span>
+                </div>
+                <div class="key incall-key" data-value="4">
+                    <span class="number">4</span>
+                    <span class="letters">GHI</span>
+                </div>
+                <div class="key incall-key" data-value="5">
+                    <span class="number">5</span>
+                    <span class="letters">JKL</span>
+                </div>
+                <div class="key incall-key" data-value="6">
+                    <span class="number">6</span>
+                    <span class="letters">MNO</span>
+                </div>
+                <div class="key incall-key" data-value="7">
+                    <span class="number">7</span>
+                    <span class="letters">PQRS</span>
+                </div>
+                <div class="key incall-key" data-value="8">
+                    <span class="number">8</span>
+                    <span class="letters">TUV</span>
+                </div>
+                <div class="key incall-key" data-value="9">
+                    <span class="number">9</span>
+                    <span class="letters">WXYZ</span>
+                </div>
+                <div class="key incall-key" data-value="*">
+                    <span class="number">✱</span>
+                    <span class="letters">&nbsp;</span>
+                </div>
+                <div class="key incall-key" data-value="0">
+                    <span class="number">0</span>
+                    <span class="letters">+</span>
+                </div>
+                <div class="key incall-key" data-value="#">
+                    <span class="number">#</span>
+                    <span class="letters">&nbsp;</span>
+                </div>
+            </div>
+            <div class="incall-actions">
+                <button class="end-call-button" id="endCallButton2">
+                    <i class="fas fa-phone-slash"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Call History Screen -->
+        <div class="screen call-history-screen" id="callHistoryScreen">
+            <div class="history-header">
+                <h1 class="header-title">Ligações</h1>
+            </div>
+            <div class="call-history-list" id="callHistoryList">
+                <!-- Calls will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav" id="bottomNav">
+            <div class="nav-item" id="navCalls">
+                <div class="nav-icon">
+                    <i class="fas fa-clock-rotate-left"></i>
+                    <span class="badge" id="callsBadge">12</span>
+                </div>
+                <span>Ligações</span>
+            </div>
+            <div class="nav-item active" id="navKeypad">
+                <div class="nav-icon">
+                    <i class="fas fa-th"></i>
+                </div>
+                <span>Teclado</span>
+            </div>
+        </nav>
+
+        <!-- Pause Modal -->
+        <div class="modal-overlay" id="pauseModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Selecionar Pausa</h2>
+                    <button class="modal-close" id="closePauseModal">
+                        <i class="fas fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="pause-options" id="pauseOptions">
+                    <!-- Pause options will be populated by JavaScript -->
+                </div>
+                <button class="modal-cancel-btn" id="cancelPauseBtn">Cancelar</button>
+            </div>
+        </div>
+
+        <!-- Call Qualification Modal -->
+        <div class="modal-overlay qualification-modal" id="qualificationModal">
+            <div class="qualification-sheet">
+                <div class="sheet-handle"></div>
+                
+                <div class="sheet-header">
+                    <span class="sheet-title">Qualificar Chamada</span>
+                    <span class="sheet-subtitle">Registre o resultado do atendimento</span>
+                </div>
+                
+                <div class="result-segmented">
+                    <button class="segment active" id="resultSuccess" data-type="success">
+                        Sucesso
+                    </button>
+                    <button class="segment" id="resultFailure" data-type="failure">
+                        Falha
+                    </button>
+                    <div class="segment-indicator"></div>
+                </div>
+                
+                <div class="qualifications-container">
+                    <div class="qualification-list" id="qualificationList">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="sheet-footer">
+                    <button class="confirm-btn" id="confirmQualificationBtn" disabled>
+                        Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
