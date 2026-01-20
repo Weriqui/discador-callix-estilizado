@@ -384,14 +384,16 @@ function formatPhoneNumber(number) {
 
 // Update phone number display
 function updatePhoneNumberDisplay() {
+    if (!elements.phoneNumber) return;
+    
     if (state.phoneNumber) {
         elements.phoneNumber.value = formatPhoneNumber(state.phoneNumber);
-        elements.deleteButton.style.visibility = 'visible';
-        elements.addContact.style.display = 'block';
+        if (elements.deleteButton) elements.deleteButton.style.visibility = 'visible';
+        if (elements.addContact) elements.addContact.style.display = 'block';
     } else {
         elements.phoneNumber.value = '';
-        elements.deleteButton.style.visibility = 'hidden';
-        elements.addContact.style.display = 'none';
+        if (elements.deleteButton) elements.deleteButton.style.visibility = 'hidden';
+        if (elements.addContact) elements.addContact.style.display = 'none';
     }
     
     // Adjust font size based on number length
